@@ -44,9 +44,9 @@ function App() {
         <div className="header-content">
           <h1 className="app-title">Expiry Tracker</h1>
           <div className="header-actions">
-            {/* Categories button - icon only */}
+            {/* Categories button - icon only with border */}
             <button
-              className="btn btn-icon"
+              className="btn btn-icon-bordered"
               onClick={() => setIsSettingsOpen(true)}
               aria-label="Categories"
               title="Categories"
@@ -54,60 +54,60 @@ function App() {
               <svg 
                 width="18" 
                 height="18" 
-                viewBox="0 0 16 16" 
+                viewBox="0 0 24 24" 
                 fill="none" 
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path 
-                  d="M2 4.5L4.5 2L7 4.5L4.5 7L2 4.5Z" 
+                  d="M3 7L6.5 3.5L10 7L6.5 10.5L3 7Z" 
                   stroke="currentColor" 
-                  strokeWidth="1.5" 
+                  strokeWidth="2" 
                   strokeLinecap="round" 
                   strokeLinejoin="round"
                 />
                 <path 
-                  d="M8 4H14" 
+                  d="M12 6H21" 
                   stroke="currentColor" 
-                  strokeWidth="1.5" 
+                  strokeWidth="2" 
                   strokeLinecap="round"
                 />
                 <path 
-                  d="M8 8H14" 
+                  d="M12 12H21" 
                   stroke="currentColor" 
-                  strokeWidth="1.5" 
+                  strokeWidth="2" 
                   strokeLinecap="round"
                 />
                 <path 
-                  d="M8 12H14" 
+                  d="M12 18H21" 
                   stroke="currentColor" 
-                  strokeWidth="1.5" 
+                  strokeWidth="2" 
                   strokeLinecap="round"
                 />
               </svg>
             </button>
             {activeTab === 'active' && (
-              /* Add button - icon + text (primary) */
+              /* Add button - icon + text (primary, blue) */
               <button
-                className="btn btn-primary btn-text-icon"
+                className="btn btn-primary btn-text-icon-primary"
                 onClick={() => setIsAddModalOpen(true)}
                 aria-label="Add product"
               >
                 <svg 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 16 16" 
+                  width="18" 
+                  height="18" 
+                  viewBox="0 0 24 24" 
                   fill="none" 
                   xmlns="http://www.w3.org/2000/svg"
                   style={{ marginRight: '6px' }}
                 >
                   <path 
-                    d="M8 3V13M3 8H13" 
+                    d="M12 5V19M5 12H19" 
                     stroke="currentColor" 
-                    strokeWidth="2" 
+                    strokeWidth="2.5" 
                     strokeLinecap="round"
                   />
                 </svg>
-                Add Product
+                New
               </button>
             )}
           </div>
