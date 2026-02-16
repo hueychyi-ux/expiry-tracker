@@ -29,7 +29,6 @@ function SettingsModal({ onClose }) {
   }, []);
 
   const toggleCategory = (categoryName) => {
-    // Don't toggle if in edit mode
     if (editingCategory === categoryName) return;
     
     setExpandedCategories(prev => ({
@@ -52,7 +51,6 @@ function SettingsModal({ onClose }) {
   const handleStartEditCategory = (categoryName) => {
     setEditingCategory(categoryName);
     setEditCategoryName(categoryName);
-    // Auto-expand when editing
     setExpandedCategories(prev => ({ ...prev, [categoryName]: true }));
   };
 
@@ -147,7 +145,7 @@ function SettingsModal({ onClose }) {
             Organize your products by adding or editing categories and subcategories.
           </p>
 
-          {/* Add New Category */}
+          {/* Add New Category - Matching Homepage Button Height */}
           {isAddingCategory ? (
             <div style={{ marginBottom: '20px', padding: '12px', backgroundColor: 'var(--color-bg-secondary)', borderRadius: '8px' }}>
               <input
@@ -170,11 +168,26 @@ function SettingsModal({ onClose }) {
             </div>
           ) : (
             <button 
-              className="btn btn-primary" 
+              className="btn btn-primary btn-text-icon-primary"
               onClick={() => setIsAddingCategory(true)}
               style={{ marginBottom: '20px', width: '100%' }}
             >
-              + Add New Category
+              <svg 
+                width="18" 
+                height="18" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ marginRight: '6px' }}
+              >
+                <path 
+                  d="M12 5V19M5 12H19" 
+                  stroke="currentColor" 
+                  strokeWidth="2.5" 
+                  strokeLinecap="round"
+                />
+              </svg>
+              Add New Category
             </button>
           )}
 
@@ -255,45 +268,29 @@ function SettingsModal({ onClose }) {
                     )}
                   </div>
 
-                  {/* Buttons - View Mode: Delete (left) + Edit (right), Edit Mode: Cancel (left) + Save (right) */}
-                  <div style={{ display: 'flex', gap: '12px', flexShrink: 0, alignItems: 'center' }}>
+                  {/* SVG Icon Buttons with Borders */}
+                  <div style={{ display: 'flex', gap: '8px', flexShrink: 0, alignItems: 'center' }}>
                     {isInEditMode(categoryName) ? (
                       <>
                         {/* Cancel (left, secondary) */}
                         <button
+                          className="btn btn-icon-bordered"
                           onClick={handleCancelEdit}
                           title="Cancel"
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--color-text-secondary)',
-                            cursor: 'pointer',
-                            fontSize: '18px',
-                            padding: '4px',
-                            lineHeight: '1',
-                            display: 'flex',
-                            alignItems: 'center'
-                          }}
                         >
-                          ✕
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                          </svg>
                         </button>
                         {/* Save (right, primary) */}
                         <button
+                          className="btn btn-text-icon-bordered-primary"
                           onClick={() => handleSaveEditCategory(categoryName)}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--color-primary)',
-                            cursor: 'pointer',
-                            fontSize: '13px',
-                            fontWeight: '500',
-                            padding: '4px 8px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '4px'
-                          }}
+                          title="Save"
                         >
-                          <span style={{ fontSize: '16px' }}>✓</span>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ marginRight: '4px' }}>
+                            <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
                           Save
                         </button>
                       </>
@@ -301,39 +298,23 @@ function SettingsModal({ onClose }) {
                       <>
                         {/* Delete (left, destructive) */}
                         <button
+                          className="btn btn-icon-bordered-danger"
                           onClick={() => handleDeleteCategory(categoryName)}
                           title="Delete"
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--color-critical)',
-                            cursor: 'pointer',
-                            fontSize: '18px',
-                            padding: '4px',
-                            lineHeight: '1',
-                            display: 'flex',
-                            alignItems: 'center'
-                          }}
                         >
-                          🗑
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
                         </button>
                         {/* Edit (right, primary) */}
                         <button
+                          className="btn btn-text-icon-bordered-primary"
                           onClick={() => handleStartEditCategory(categoryName)}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--color-primary)',
-                            cursor: 'pointer',
-                            fontSize: '13px',
-                            fontWeight: '500',
-                            padding: '4px 8px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '4px'
-                          }}
+                          title="Edit"
                         >
-                          <span style={{ fontSize: '14px' }}>✏️</span>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ marginRight: '4px' }}>
+                            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
                           Edit
                         </button>
                       </>
