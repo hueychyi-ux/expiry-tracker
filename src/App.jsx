@@ -2,38 +2,35 @@ import { useState, useEffect } from 'react';
 import ProductList from './components/ProductList';
 import AddProductModal from './components/AddProductModal';
 import ProductDetailModal from './components/ProductDetailModal';
+import SettingsModal from './components/SettingsModal';
 import { getProducts } from './utils/storage';
 import './index.css';
 
 function App() {
   const [products, setProducts] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [activeTab, setActiveTab] = useState('active'); // 'active' or 'archive'
-  const [filter, setFilter] = useState('all'); // 'all' or 'expiring'
+  const [activeTab, setActiveTab] = useState('active');
+  const [filter, setFilter] = useState('all');
 
-  // Load products from localStorage
   useEffect(() => {
     const loadedProducts = getProducts();
     setProducts(loadedProducts);
   }, []);
 
-  // Refresh products list
   const refreshProducts = () => {
     const loadedProducts = getProducts();
     setProducts(loadedProducts);
   };
 
-  // Filter products based on active tab and filter
   const filteredProducts = products.filter(product => {
-    // Filter by tab (active vs archive)
     if (activeTab === 'active') {
       if (product.status !== 'active') return false;
     } else {
       if (product.status === 'active') return false;
     }
 
-    // Filter by expiry (only for active tab)
     if (activeTab === 'active' && filter === 'expiring') {
       if (!product.expiryDate) return false;
     }
@@ -47,6 +44,14 @@ function App() {
         <div className="header-content">
           <h1 className="app-title">Expiry Tracker</h1>
           <div className="header-actions">
+            <button
+              className="btn btn-icon"
+              onClick={() => setIsSettingsOpen(true)}
+              aria-label="Settings"
+              title="Settings"
+            >
+              ⚙️
+            </button>
             {activeTab === 'active' && (
               <button
                 className="btn btn-primary btn-icon"
@@ -118,6 +123,12 @@ function App() {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onUpdate={refreshProducts}
+        />
+      )}
+
+      {isSettingsOpen && (
+        <SettingsModal
+          onClose={() => setIsSettingsOpen(false)}
         />
       )}
     </div>
