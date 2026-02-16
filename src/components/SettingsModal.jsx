@@ -145,7 +145,6 @@ function SettingsModal({ onClose }) {
             Organize your products by adding or editing categories and subcategories.
           </p>
 
-          {/* Add New Category - Matching Homepage Button Height */}
           {isAddingCategory ? (
             <div style={{ marginBottom: '20px', padding: '12px', backgroundColor: 'var(--color-bg-secondary)', borderRadius: '8px' }}>
               <input
@@ -191,7 +190,6 @@ function SettingsModal({ onClose }) {
             </button>
           )}
 
-          {/* Categories List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {Object.keys(allCategories).map(categoryName => (
               <div 
@@ -202,7 +200,6 @@ function SettingsModal({ onClose }) {
                   overflow: 'hidden'
                 }}
               >
-                {/* Category Header */}
                 <div 
                   style={{
                     padding: '12px 16px',
@@ -221,12 +218,12 @@ function SettingsModal({ onClose }) {
                         background: 'none',
                         border: 'none',
                         cursor: isInEditMode(categoryName) ? 'default' : 'pointer',
-                        fontSize: '14px',
+                        fontSize: '18px',
                         padding: '0',
                         lineHeight: '1',
                         color: 'var(--color-text-secondary)',
-                        width: '16px',
-                        height: '16px',
+                        width: '20px',
+                        height: '20px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -268,11 +265,9 @@ function SettingsModal({ onClose }) {
                     )}
                   </div>
 
-                  {/* SVG Icon Buttons with Borders */}
                   <div style={{ display: 'flex', gap: '8px', flexShrink: 0, alignItems: 'center' }}>
                     {isInEditMode(categoryName) ? (
                       <>
-                        {/* Cancel (left, secondary) */}
                         <button
                           className="btn btn-icon-bordered"
                           onClick={handleCancelEdit}
@@ -282,9 +277,8 @@ function SettingsModal({ onClose }) {
                             <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                           </svg>
                         </button>
-                        {/* Save (right, primary) */}
                         <button
-                          className="btn btn-text-icon-bordered-primary"
+                          className="btn btn-text-icon-primary-small"
                           onClick={() => handleSaveEditCategory(categoryName)}
                           title="Save"
                         >
@@ -296,7 +290,6 @@ function SettingsModal({ onClose }) {
                       </>
                     ) : (
                       <>
-                        {/* Delete (left, destructive) */}
                         <button
                           className="btn btn-icon-bordered-danger"
                           onClick={() => handleDeleteCategory(categoryName)}
@@ -306,9 +299,8 @@ function SettingsModal({ onClose }) {
                             <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                         </button>
-                        {/* Edit (right, primary) */}
                         <button
-                          className="btn btn-text-icon-bordered-primary"
+                          className="btn btn-text-icon-monotone"
                           onClick={() => handleStartEditCategory(categoryName)}
                           title="Edit"
                         >
@@ -322,10 +314,8 @@ function SettingsModal({ onClose }) {
                   </div>
                 </div>
 
-                {/* Subcategories (Collapsible) */}
                 {expandedCategories[categoryName] && (
-                  <div style={{ padding: '0 16px 16px 16px' }}>
-                    {/* Subcategories Pills - View Mode (read-only) */}
+                  <div style={{ padding: '8px 16px 16px 16px' }}>
                     {!isInEditMode(categoryName) && allCategories[categoryName].length > 0 && (
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px', marginLeft: '24px' }}>
                         {allCategories[categoryName].map(subcategoryName => (
@@ -345,7 +335,6 @@ function SettingsModal({ onClose }) {
                       </div>
                     )}
 
-                    {/* Subcategories Pills - Edit Mode (deletable) */}
                     {isInEditMode(categoryName) && allCategories[categoryName].length > 0 && (
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px', marginLeft: '24px' }}>
                         {allCategories[categoryName].map(subcategoryName => (
@@ -381,7 +370,6 @@ function SettingsModal({ onClose }) {
                       </div>
                     )}
 
-                    {/* Add Subcategory - Only in Edit Mode */}
                     {isInEditMode(categoryName) && (
                       <div style={{ marginLeft: '24px' }}>
                         {addingSubcategoryTo === categoryName ? (
