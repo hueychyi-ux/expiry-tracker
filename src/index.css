@@ -547,3 +547,27 @@ body {
 .mt-1 { margin-top: 8px; }
 .mt-2 { margin-top: 16px; }
 .mt-3 { margin-top: 24px; }
+
+/* Text + Icon Button Style (for Categories button) */
+.btn-text-icon {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-text-icon:hover {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text);
+}
+
+.btn-text-icon svg {
+  flex-shrink: 0;
+}
