@@ -38,13 +38,24 @@ export function formatDate(dateString) {
   });
 }
 
-// Format days remaining
+// Format days remaining in "Xm Xd" format
 export function formatDaysRemaining(days) {
   if (days === null) return 'No expiry date';
   if (days < 0) return `Expired ${Math.abs(days)} days ago`;
   if (days === 0) return 'Expires today';
   if (days === 1) return 'Expires tomorrow';
-  return `Expires in ${days} days`;
+  
+  // Convert to months and days format
+  const months = Math.floor(days / 30);
+  const remainingDays = days % 30;
+  
+  if (months > 0 && remainingDays > 0) {
+    return `Expires in ${months}m ${remainingDays}d`;
+  } else if (months > 0) {
+    return `Expires in ${months}m`;
+  } else {
+    return `Expires in ${days}d`;
+  }
 }
 
 // Get today's date in YYYY-MM-DD format
