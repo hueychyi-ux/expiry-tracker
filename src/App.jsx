@@ -44,7 +44,7 @@ function App() {
         <div className="header-content">
           <h1 className="app-title">Expiry Tracker</h1>
           <div className="header-actions">
-            {/* Categories button - icon only with border */}
+            {/* Categories button - tag icon only with border */}
             <button
               className="btn btn-icon-bordered"
               onClick={() => setIsSettingsOpen(true)}
