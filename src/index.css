@@ -571,3 +571,100 @@ body {
 .btn-text-icon svg {
   flex-shrink: 0;
 }
+
+/* Icon button with border (Categories button) */
+.btn-icon-bordered {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.btn-icon-bordered:hover {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border-hover);
+}
+
+/* Icon + Text button with border and danger color (Delete) */
+.btn-icon-bordered-danger {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-bg);
+  color: var(--color-critical);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.btn-icon-bordered-danger:hover {
+  background-color: #fef2f2;
+  border-color: var(--color-critical);
+}
+
+/* Icon + Text primary button (Blue, for + New, Edit, Save) */
+.btn-text-icon-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+  height: 40px;
+}
+
+.btn-text-icon-primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.btn-text-icon-primary svg {
+  flex-shrink: 0;
+}
+
+/* Icon + Text button with border and primary color (Edit, Save in settings) */
+.btn-text-icon-bordered-primary {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-primary);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+  height: 32px;
+}
+
+.btn-text-icon-bordered-primary:hover {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-primary);
+}
+
+.btn-text-icon-bordered-primary svg {
+  flex-shrink: 0;
+}
