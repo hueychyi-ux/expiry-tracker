@@ -45,12 +45,45 @@ function App() {
           <h1 className="app-title">Expiry Tracker</h1>
           <div className="header-actions">
             <button
-              className="btn btn-icon"
+              className="btn btn-text-icon"
               onClick={() => setIsSettingsOpen(true)}
-              aria-label="Settings"
-              title="Settings"
+              aria-label="Categories"
             >
-              ⚙️
+              <svg 
+                width="16" 
+                height="16" 
+                viewBox="0 0 16 16" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ marginRight: '4px' }}
+              >
+                <path 
+                  d="M2 4.5L4.5 2L7 4.5L4.5 7L2 4.5Z" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                />
+                <path 
+                  d="M8 4H14" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5" 
+                  strokeLinecap="round"
+                />
+                <path 
+                  d="M8 8H14" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5" 
+                  strokeLinecap="round"
+                />
+                <path 
+                  d="M8 12H14" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5" 
+                  strokeLinecap="round"
+                />
+              </svg>
+              Categories
             </button>
             {activeTab === 'active' && (
               <button
