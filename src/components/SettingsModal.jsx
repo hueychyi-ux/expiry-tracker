@@ -17,7 +17,6 @@ function SettingsModal({ onClose }) {
     const custom = getCustomCategories();
     setCustomCategories(custom);
     
-    // Merge default and custom categories
     const merged = { ...DEFAULT_CATEGORIES };
     Object.keys(custom).forEach(cat => {
       if (merged[cat]) {
@@ -30,6 +29,9 @@ function SettingsModal({ onClose }) {
   }, []);
 
   const toggleCategory = (categoryName) => {
+    // Don't toggle if in edit mode
+    if (editingCategory === categoryName) return;
+    
     setExpandedCategories(prev => ({
       ...prev,
       [categoryName]: !prev[categoryName]
@@ -50,11 +52,19 @@ function SettingsModal({ onClose }) {
   const handleStartEditCategory = (categoryName) => {
     setEditingCategory(categoryName);
     setEditCategoryName(categoryName);
+    // Auto-expand when editing
+    setExpandedCategories(prev => ({ ...prev, [categoryName]: true }));
+  };
+
+  const handleCancelEdit = () => {
+    setEditingCategory(null);
+    setEditCategoryName('');
+    setAddingSubcategoryTo(null);
+    setNewSubcategoryName('');
   };
 
   const handleSaveEditCategory = (oldName) => {
     if (editCategoryName.trim() && editCategoryName !== oldName) {
-      // Create new category with renamed name
       const updated = { ...customCategories };
       updated[editCategoryName] = updated[oldName] || [];
       delete updated[oldName];
@@ -62,7 +72,6 @@ function SettingsModal({ onClose }) {
       saveCustomCategories(updated);
       setCustomCategories(updated);
       
-      // Update all categories
       const updatedAll = { ...allCategories };
       updatedAll[editCategoryName] = updatedAll[oldName];
       delete updatedAll[oldName];
@@ -82,6 +91,8 @@ function SettingsModal({ onClose }) {
       const updatedAll = { ...allCategories };
       delete updatedAll[categoryName];
       setAllCategories(updatedAll);
+      
+      setEditingCategory(null);
     }
   };
 
@@ -120,6 +131,8 @@ function SettingsModal({ onClose }) {
       }));
     }
   };
+
+  const isInEditMode = (categoryName) => editingCategory === categoryName;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -183,40 +196,58 @@ function SettingsModal({ onClose }) {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    backgroundColor: expandedCategories[categoryName] ? 'var(--color-bg-secondary)' : 'transparent'
+                    backgroundColor: expandedCategories[categoryName] ? 'var(--color-bg-secondary)' : 'transparent',
+                    gap: '12px'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, minWidth: 0 }}>
                     <button
                       onClick={() => toggleCategory(categoryName)}
+                      disabled={isInEditMode(categoryName)}
                       style={{
                         background: 'none',
                         border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '16px',
+                        cursor: isInEditMode(categoryName) ? 'default' : 'pointer',
+                        fontSize: '14px',
                         padding: '0',
                         lineHeight: '1',
-                        color: 'var(--color-text-secondary)'
+                        color: 'var(--color-text-secondary)',
+                        width: '16px',
+                        height: '16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                        opacity: isInEditMode(categoryName) ? 0.5 : 1
                       }}
                     >
-                      {expandedCategories[categoryName] ? '▼' : '▶'}
+                      {expandedCategories[categoryName] ? '˅' : '˃'}
                     </button>
                     
-                    {editingCategory === categoryName ? (
+                    {isInEditMode(categoryName) ? (
                       <input
                         type="text"
                         className="form-input"
                         value={editCategoryName}
                         onChange={e => setEditCategoryName(e.target.value)}
                         autoFocus
-                        style={{ flex: 1, marginRight: '8px' }}
+                        style={{ flex: 1, minWidth: 0 }}
                         onKeyPress={e => {
                           if (e.key === 'Enter') handleSaveEditCategory(categoryName);
                         }}
                       />
                     ) : (
                       <span 
-                        style={{ fontSize: '15px', fontWeight: '500', cursor: 'pointer' }}
+                        style={{ 
+                          fontSize: '15px', 
+                          fontWeight: '500', 
+                          cursor: 'pointer',
+                          flex: 1,
+                          minWidth: 0,
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap'
+                        }}
                         onClick={() => toggleCategory(categoryName)}
                       >
                         {categoryName}
@@ -224,9 +255,29 @@ function SettingsModal({ onClose }) {
                     )}
                   </div>
 
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {editingCategory === categoryName ? (
+                  {/* Buttons - View Mode: Delete (left) + Edit (right), Edit Mode: Cancel (left) + Save (right) */}
+                  <div style={{ display: 'flex', gap: '12px', flexShrink: 0, alignItems: 'center' }}>
+                    {isInEditMode(categoryName) ? (
                       <>
+                        {/* Cancel (left, secondary) */}
+                        <button
+                          onClick={handleCancelEdit}
+                          title="Cancel"
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            color: 'var(--color-text-secondary)',
+                            cursor: 'pointer',
+                            fontSize: '18px',
+                            padding: '4px',
+                            lineHeight: '1',
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          ✕
+                        </button>
+                        {/* Save (right, primary) */}
                         <button
                           onClick={() => handleSaveEditCategory(categoryName)}
                           style={{
@@ -235,29 +286,38 @@ function SettingsModal({ onClose }) {
                             color: 'var(--color-primary)',
                             cursor: 'pointer',
                             fontSize: '13px',
-                            fontWeight: '500'
+                            fontWeight: '500',
+                            padding: '4px 8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px'
                           }}
                         >
+                          <span style={{ fontSize: '16px' }}>✓</span>
                           Save
-                        </button>
-                        <button
-                          onClick={() => {
-                            setEditingCategory(null);
-                            setEditCategoryName('');
-                          }}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--color-text-secondary)',
-                            cursor: 'pointer',
-                            fontSize: '13px'
-                          }}
-                        >
-                          Cancel
                         </button>
                       </>
                     ) : (
                       <>
+                        {/* Delete (left, destructive) */}
+                        <button
+                          onClick={() => handleDeleteCategory(categoryName)}
+                          title="Delete"
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            color: 'var(--color-critical)',
+                            cursor: 'pointer',
+                            fontSize: '18px',
+                            padding: '4px',
+                            lineHeight: '1',
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          🗑
+                        </button>
+                        {/* Edit (right, primary) */}
                         <button
                           onClick={() => handleStartEditCategory(categoryName)}
                           style={{
@@ -266,23 +326,15 @@ function SettingsModal({ onClose }) {
                             color: 'var(--color-primary)',
                             cursor: 'pointer',
                             fontSize: '13px',
-                            fontWeight: '500'
+                            fontWeight: '500',
+                            padding: '4px 8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px'
                           }}
                         >
+                          <span style={{ fontSize: '14px' }}>✏️</span>
                           Edit
-                        </button>
-                        <button
-                          onClick={() => handleDeleteCategory(categoryName)}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--color-critical)',
-                            cursor: 'pointer',
-                            fontSize: '13px',
-                            fontWeight: '500'
-                          }}
-                        >
-                          Delete
                         </button>
                       </>
                     )}
@@ -292,8 +344,28 @@ function SettingsModal({ onClose }) {
                 {/* Subcategories (Collapsible) */}
                 {expandedCategories[categoryName] && (
                   <div style={{ padding: '0 16px 16px 16px' }}>
-                    {/* Subcategories Pills */}
-                    {allCategories[categoryName].length > 0 && (
+                    {/* Subcategories Pills - View Mode (read-only) */}
+                    {!isInEditMode(categoryName) && allCategories[categoryName].length > 0 && (
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px', marginLeft: '24px' }}>
+                        {allCategories[categoryName].map(subcategoryName => (
+                          <div
+                            key={subcategoryName}
+                            style={{
+                              padding: '4px 10px',
+                              backgroundColor: 'var(--color-bg-secondary)',
+                              borderRadius: '4px',
+                              fontSize: '13px',
+                              color: 'var(--color-text)'
+                            }}
+                          >
+                            {subcategoryName}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Subcategories Pills - Edit Mode (deletable) */}
+                    {isInEditMode(categoryName) && allCategories[categoryName].length > 0 && (
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px', marginLeft: '24px' }}>
                         {allCategories[categoryName].map(subcategoryName => (
                           <div
@@ -328,45 +400,47 @@ function SettingsModal({ onClose }) {
                       </div>
                     )}
 
-                    {/* Add Subcategory */}
-                    <div style={{ marginLeft: '24px' }}>
-                      {addingSubcategoryTo === categoryName ? (
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <input
-                            type="text"
-                            className="form-input"
-                            value={newSubcategoryName}
-                            onChange={e => setNewSubcategoryName(e.target.value)}
-                            placeholder="New subcategory"
-                            autoFocus
-                            style={{ flex: 1 }}
-                          />
-                          <button 
-                            className="btn btn-primary" 
-                            onClick={() => handleAddSubcategory(categoryName)}
+                    {/* Add Subcategory - Only in Edit Mode */}
+                    {isInEditMode(categoryName) && (
+                      <div style={{ marginLeft: '24px' }}>
+                        {addingSubcategoryTo === categoryName ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <input
+                              type="text"
+                              className="form-input"
+                              value={newSubcategoryName}
+                              onChange={e => setNewSubcategoryName(e.target.value)}
+                              placeholder="New subcategory"
+                              autoFocus
+                              style={{ flex: 1 }}
+                            />
+                            <button 
+                              className="btn btn-primary" 
+                              onClick={() => handleAddSubcategory(categoryName)}
+                            >
+                              Add
+                            </button>
+                            <button 
+                              className="btn" 
+                              onClick={() => {
+                                setAddingSubcategoryTo(null);
+                                setNewSubcategoryName('');
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            className="btn"
+                            onClick={() => setAddingSubcategoryTo(categoryName)}
+                            style={{ fontSize: '13px', padding: '6px 12px' }}
                           >
-                            Add
+                            + Add Subcategory
                           </button>
-                          <button 
-                            className="btn" 
-                            onClick={() => {
-                              setAddingSubcategoryTo(null);
-                              setNewSubcategoryName('');
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : (
-                        <button
-                          className="btn"
-                          onClick={() => setAddingSubcategoryTo(categoryName)}
-                          style={{ fontSize: '13px', padding: '6px 12px' }}
-                        >
-                          + Add Subcategory
-                        </button>
-                      )}
-                    </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
