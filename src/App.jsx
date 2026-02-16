@@ -44,18 +44,19 @@ function App() {
         <div className="header-content">
           <h1 className="app-title">Expiry Tracker</h1>
           <div className="header-actions">
+            {/* Categories button - icon only */}
             <button
-              className="btn btn-text-icon"
+              className="btn btn-icon"
               onClick={() => setIsSettingsOpen(true)}
               aria-label="Categories"
+              title="Categories"
             >
               <svg 
-                width="16" 
-                height="16" 
+                width="18" 
+                height="18" 
                 viewBox="0 0 16 16" 
                 fill="none" 
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ marginRight: '4px' }}
               >
                 <path 
                   d="M2 4.5L4.5 2L7 4.5L4.5 7L2 4.5Z" 
@@ -83,15 +84,30 @@ function App() {
                   strokeLinecap="round"
                 />
               </svg>
-              Categories
             </button>
             {activeTab === 'active' && (
+              /* Add button - icon + text (primary) */
               <button
-                className="btn btn-primary btn-icon"
+                className="btn btn-primary btn-text-icon"
                 onClick={() => setIsAddModalOpen(true)}
                 aria-label="Add product"
               >
-                +
+                <svg 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 16 16" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ marginRight: '6px' }}
+                >
+                  <path 
+                    d="M8 3V13M3 8H13" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    strokeLinecap="round"
+                  />
+                </svg>
+                Add Product
               </button>
             )}
           </div>
