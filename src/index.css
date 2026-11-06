@@ -548,127 +548,6 @@ body {
 .mt-2 { margin-top: 16px; }
 .mt-3 { margin-top: 24px; }
 
-/* Text + Icon Button Style (for Categories button) */
-.btn-text-icon {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  background-color: transparent;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.btn-text-icon:hover {
-  background-color: var(--color-bg-secondary);
-  color: var(--color-text);
-}
-
-.btn-text-icon svg {
-  flex-shrink: 0;
-}
-
-/* Icon button with border (Categories button) */
-.btn-icon-bordered {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  line-height: 1;
-}
-
-.btn-icon-bordered:hover {
-  background-color: var(--color-bg-secondary);
-  border-color: var(--color-border-hover);
-}
-
-/* Icon + Text button with border and danger color (Delete) */
-.btn-icon-bordered-danger {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background-color: var(--color-bg);
-  color: var(--color-critical);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  line-height: 1;
-}
-
-.btn-icon-bordered-danger:hover {
-  background-color: #fef2f2;
-  border-color: var(--color-critical);
-}
-
-/* Icon + Text primary button (Blue, for + New, Edit, Save) */
-.btn-text-icon-primary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  font-size: 15px;
-  font-weight: 500;
-  color: white;
-  background-color: var(--color-primary);
-  border: 1px solid var(--color-primary);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  line-height: 1;
-  height: 40px;
-}
-
-.btn-text-icon-primary:hover {
-  background-color: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
-}
-
-.btn-text-icon-primary svg {
-  flex-shrink: 0;
-}
-
-/* Icon + Text button with border and primary color (Edit, Save in settings) */
-.btn-text-icon-bordered-primary {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-primary);
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  line-height: 1;
-  height: 32px;
-}
-
-.btn-text-icon-bordered-primary:hover {
-  background-color: var(--color-bg-secondary);
-  border-color: var(--color-primary);
-}
-
-.btn-text-icon-bordered-primary svg {
-  flex-shrink: 0;
-}
-
 /* Icon button with border - 36px */
 .btn-icon-bordered {
   width: 36px;
@@ -792,4 +671,90 @@ body {
 
 .btn-text-icon-monotone svg {
   flex-shrink: 0;
+}
+
+/* ===== Quick Add ===== */
+
+/* Expiry chips */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-bg-secondary);
+}
+
+.chip-selected,
+.chip-selected:hover {
+  background-color: #eaf2fd;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.chip-result {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.chip-result strong {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* "+ More details" toggle */
+.details-toggle {
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.details-toggle:hover {
+  color: var(--color-text);
+}
+
+.details-section {
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Footer: secondary on the left, primary on the right */
+.modal-footer-split {
+  justify-content: space-between;
+}
+
+/* Disabled buttons */
+.btn:disabled,
+.btn:disabled:hover {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-text-icon-primary:disabled:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
