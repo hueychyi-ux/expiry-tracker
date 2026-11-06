@@ -52,10 +52,12 @@ function ProductCard({ product, onClick }) {
         
         <div className="product-info">
           <div className="product-name">{product.name}</div>
-          <div className="product-meta">
-            {product.category}
-            {product.subcategory && ` • ${product.subcategory}`}
-          </div>
+          {product.category && (
+            <div className="product-meta">
+              {product.category}
+              {product.subcategory && ` • ${product.subcategory}`}
+            </div>
+          )}
           
           {product.expiryDate && (
             <div className={`product-expiry expiry-text-${urgency}`}>
